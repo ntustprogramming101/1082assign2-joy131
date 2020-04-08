@@ -97,13 +97,13 @@ void setup() {
 
 }
 
-int moveanimUP = 0;
-int moveanimDOWN = 0;
-int moveanimLEFT = 0;
-int moveanimRIGHT = 0;
-
+int movehogUP = 0;
+int movehogDOWN = 0;
+int movehogLEFT = 0;
+int movehogRIGHT = 0;
+//hog not moving
 boolean allZero(){
-  if(moveanimUP == 0 && moveanimDOWN == 0 && moveanimLEFT == 0 && moveanimRIGHT == 0){
+  if(movehogUP == 0 && movehogDOWN == 0 && movehogLEFT == 0 && movehogRIGHT == 0){
     return true;
   }
   return false;
@@ -111,10 +111,10 @@ boolean allZero(){
 
 
 void zero(){
-  moveanimUP = 0;
-  moveanimDOWN = 0;
-  moveanimLEFT = 0;
-  moveanimRIGHT = 0;
+  movehogUP = 0;
+  movehogDOWN = 0;
+  movehogLEFT = 0;
+  movehogRIGHT = 0;
 }
 
 void RunDraw()
@@ -123,22 +123,22 @@ void RunDraw()
 
 
 
-   
-  if(moveanimUP>0){
+   //moving 15 frames 
+  if(movehogUP>0){
     hogY -=80.0/15.0;
-  }  else if (moveanimDOWN>0){
+  }  else if (movehogDOWN>0){
     hogY +=80.0/15.0;
-  }  else if (moveanimLEFT>0){
+  }  else if (movehogLEFT>0){
     hogX -=80.0/15.0;
-  }  else if (moveanimRIGHT>0){
+  }  else if (movehogRIGHT>0){
     hogX +=80.0/15.0;
   }
   
   
-  if(moveanimUP > 0) moveanimUP--;
-  if(moveanimDOWN > 0) moveanimDOWN--;
-  if(moveanimLEFT > 0) moveanimLEFT--;
-  if(moveanimRIGHT > 0) moveanimRIGHT--;
+  if(movehogUP > 0) movehogUP--;
+  if(movehogDOWN > 0) movehogDOWN--;
+  if(movehogLEFT > 0) movehogLEFT--;
+  if(movehogRIGHT > 0) movehogRIGHT--;
   
   //hog boundary
     if(hogX>560 ){
@@ -163,16 +163,16 @@ void RunDraw()
   }
   
   
-  //create collision detection
+  //create hog & soldier collision detection
   hogUp = hogY;
-  hogDown = hogY + 80;
+  hogDown = hogY + 79;
   hogLeft = hogX;
-  hogRight = hogX + 80;
+  hogRight = hogX + 79;
   
   soldierUp = soldierY;
-  soldierDown = soldierY + 80;
+  soldierDown = soldierY + 79;
   soldierLeft = soldierX;
-  soldierRight = soldierX + 80;
+  soldierRight = soldierX + 79;
   
   //boolean isColliding = false;
   if(hogUp < soldierDown && hogDown > soldierUp &&
@@ -211,10 +211,10 @@ void RunDraw()
   //hog
    
   if(allZero())image (groundhogIdle , hogX , hogY);
-  if(moveanimUP > 0)image (groundhogIdle , hogX , hogY);
-  if(moveanimDOWN > 0)image (groundhogDown , hogX , hogY);
-  if(moveanimLEFT > 0)image (groundhogLeft , hogX , hogY);
-  if(moveanimRIGHT > 0)image (groundhogRight , hogX , hogY);
+  if(movehogUP > 0)image (groundhogIdle , hogX , hogY);
+  if(movehogDOWN > 0)image (groundhogDown , hogX , hogY);
+  if(movehogLEFT > 0)image (groundhogLeft , hogX , hogY);
+  if(movehogRIGHT > 0)image (groundhogRight , hogX , hogY);
  
   
   // 3 lifes
@@ -262,6 +262,7 @@ void RunDraw()
   }
 }
 
+//mouse detect button and hovering
 boolean overRect(int x, int y, int width, int height)  { // over the button 
   if (mouseX >= x && mouseX <= x+width && 
       mouseY >= y && mouseY <= y+height) {
@@ -343,19 +344,19 @@ void keyPressed() {
       {
         case UP:
         upPressed = true;
-        moveanimUP = 15;
+        movehogUP = 15;
           break;
         case DOWN:
          downPressed = true;
-         moveanimDOWN = 15;
+         movehogDOWN = 15;
           break;
         case LEFT :
         leftPressed = true;
-        moveanimLEFT = 15;
+        movehogLEFT = 15;
           break;
         case RIGHT:
         rightPressed = true;
-        moveanimRIGHT = 15;
+        movehogRIGHT = 15;
         break;     
 
       }
