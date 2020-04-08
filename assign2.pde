@@ -42,7 +42,7 @@ int soldierX; //soldier position X
 int soldierY; // soldier position Y
 
 
-final int hogStartPositionX = 280;
+final int hogStartPositionX = 320;
 final int hogStartPositionY = 80;
 int hogX, hogY;
 
