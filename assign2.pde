@@ -64,7 +64,7 @@ void GameRunSetup(){
     hogY=hogStartPositionY;
     //robotPositionX = int(random(100,500));// robot ramdom in x (there are 5 boxes)
     //int y_robotCase = int(random(0,3.99)); // between 0,1,2,3 (soil)
-    cabbagePositionX=int(random(0,640)); //between x row ,8 box 
+    cabbagePositionX=int(random(0,559.0)); //between x row ,8 box 
     int y_soldierCase= int(random(0,3.99)); //between 0,1,2,3 (soil)
      int y_cabbageCase= int(random(0,3.99));
     //robotPositionY =  160 + y_robotCase*80; //160 is sky + random * 1 box(80) 
