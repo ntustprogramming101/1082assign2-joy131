@@ -51,7 +51,10 @@ int hogUp, hogDown, hogLeft, hogRight;
 
 int soldierUp, soldierDown, soldierLeft, soldierRight;
 
-int LifeCount;
+int LifeCount, cabbagePositionX, cabbagePositionY ;
+int cabbageUP, cabbageDOWN, cabbageLEFT, cabbageRIGHT ;
+boolean cabbageImg = true;
+
 
 void GameRunSetup(){
     soldierX = 0; //soldier
@@ -61,9 +64,12 @@ void GameRunSetup(){
     hogY=hogStartPositionY;
     //robotPositionX = int(random(100,500));// robot ramdom in x (there are 5 boxes)
     //int y_robotCase = int(random(0,3.99)); // between 0,1,2,3 (soil)
+    cabbagePositionX=int(random(100,500));
     int y_soldierCase= int(random(0,3.99)); //between 0,1,2,3 (soil)
+     int y_cabbageCase= int(random(0,3.99));
     //robotPositionY =  160 + y_robotCase*80; //160 is sky + random * 1 box(80) 
-    soldierY = 160 + y_soldierCase*80; //160 is sky + random * 1 box(80)  
+    soldierY = 160 + y_soldierCase*80; //160 is sky + random * 1 box(80)
+    cabbagePositionY = 160 +y_cabbageCase*80;
     //laserX = robotPositionX + 25; // Laser point 1 (right) robot hand
     
     LifeCount = 2;
@@ -135,7 +141,7 @@ void RunDraw()
   }
   
   
-  if(movehogUP > 0) movehogUP--;
+ 
   if(movehogDOWN > 0) movehogDOWN--;
   if(movehogLEFT > 0) movehogLEFT--;
   if(movehogRIGHT > 0) movehogRIGHT--;
@@ -174,6 +180,12 @@ void RunDraw()
   soldierLeft = soldierX;
   soldierRight = soldierX + 79;
   
+  //create hog & cabbage collision detection 
+  cabbageRIGHT = cabbagePositionX + 79;
+  cabbageDOWN = cabbagePositionY + 79;
+  cabbageLEFT = cabbagePositionX;
+  cabbageUP = cabbagePositionY;
+  
   //boolean isColliding = false;
   if(hogUp < soldierDown && hogDown > soldierUp &&
     hogLeft < soldierRight && hogRight > soldierLeft)
@@ -183,7 +195,23 @@ void RunDraw()
       hogY=hogStartPositionY;    
       zero();
   }
-
+  
+  //boolean cabbage and hog colliding 
+  if (hogDown > cabbageUP && hogLeft < cabbageRIGHT &&
+      hogRight > cabbageLEFT)
+  {
+     
+    LifeCount = 3; //only plus one life 
+    cabbagePositionX = -width;
+    cabbagePositionY =-height;
+    
+    
+     cabbageImg = false; //to make the cabbage disappear after colliding with hog
+      
+  }
+  
+  
+  
   //println(isColliding);
   
 
@@ -199,6 +227,8 @@ void RunDraw()
   strokeWeight(5);
   fill(253, 184, 19);
   ellipse(590, 50, 120, 120); 
+  
+ 
   
    //soil
   image (soil , 0 , 160); 
@@ -230,6 +260,8 @@ void RunDraw()
   //draw soldier
   image(soldier, soldierX ,soldierY);
   
+   //cabbage
+  image(cabbage,cabbagePositionX,cabbagePositionY); 
   //robot
   //image ( robot , robotPositionX , robotPositionY); 
   
@@ -250,6 +282,7 @@ void RunDraw()
   //line(laserX,robotPositionY+37,laserX2,robotPositionY+37); 
  
   
+ 
  
  
  
@@ -342,10 +375,7 @@ void keyPressed() {
       zero();
       switch( keyCode )
       {
-        case UP:
-        upPressed = true;
-        movehogUP = 15;
-          break;
+       
         case DOWN:
          downPressed = true;
          movehogDOWN = 15;
